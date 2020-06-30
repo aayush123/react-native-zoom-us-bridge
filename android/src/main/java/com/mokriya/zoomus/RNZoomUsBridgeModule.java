@@ -12,6 +12,7 @@ import com.facebook.react.bridge.Callback;
 
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.Arguments;
 
 import us.zoom.sdk.ZoomSDK;
@@ -163,6 +164,7 @@ public class RNZoomUsBridgeModule extends ReactContextBaseJavaModule implements 
         final String meetingNo,
         final String displayName,
         final String meetingPassword,
+        final ReadableMap joiningOptions,
         Promise promise
     ) {
         try {
@@ -177,10 +179,18 @@ public class RNZoomUsBridgeModule extends ReactContextBaseJavaModule implements 
         final MeetingService meetingService = zoomSDK.getMeetingService();
 
         JoinMeetingOptions opts = new JoinMeetingOptions();
-        opts.no_driving_mode = true;
-        opts.no_invite = true;
-        opts.invite_options = InviteOptions.INVITE_DISABLE_ALL;
-        opts.meeting_views_options = MeetingViewsOptions.NO_TEXT_PASSWORD + MeetingViewsOptions.NO_TEXT_MEETING_ID;
+        if (joiningOptions.hasKey('no_driving_mode')) {
+          opts.no_driving_mode = joiningOptions.getBoolean('no_driving_mode');
+        }
+        if (joiningOptions.hasKey('no_invite')) {
+          opts.no_invite = joiningOptions.getBoolean('no_invite');
+        }
+        if (joiningOptions.hasKey('no_text_password') && joiningOptions.getBoolean('no_text_password')) {
+          opts.meeting_views_options += MeetingViewsOptions.NO_TEXT_PASSWORD;
+        }
+        if (joiningOptions.hasKey('no_text_meeting_id') && joiningOptions.getBoolean('no_text_meeting_id')) {
+          opts.meeting_views_options += MeetingViewsOptions.NO_TEXT_MEETING_ID;
+        }
         JoinMeetingParams params = new JoinMeetingParams();
         params.displayName = displayName;
         params.meetingNo = meetingNo;
