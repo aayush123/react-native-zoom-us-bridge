@@ -229,7 +229,7 @@ public class RNZoomUsBridgeModule extends ReactContextBaseJavaModule implements 
         WritableMap params = Arguments.createMap();
 
         if(meetingStatus == MeetingStatus.MEETING_STATUS_FAILED) {
-          if (meetingPromise) {
+          if (meetingPromise != null) {
             meetingPromise.reject(
                     "ERR_ZOOM_MEETING",
                     "Error: " + errorCode + ", internalErrorCode=" + internalErrorCode
@@ -240,7 +240,7 @@ public class RNZoomUsBridgeModule extends ReactContextBaseJavaModule implements 
           sendEvent(reactContext, "meetingEnded", params);
         } else if (meetingStatus == MeetingStatus.MEETING_STATUS_INMEETING) {
           sendEvent(reactContext, "meetingStarted", params);
-          if (meetingPromise) {
+          if (meetingPromise != null) {
             meetingPromise.resolve("Connected to zoom meeting");
             meetingPromise = null;
           }
