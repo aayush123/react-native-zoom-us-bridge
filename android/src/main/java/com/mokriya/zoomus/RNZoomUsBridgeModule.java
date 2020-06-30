@@ -28,6 +28,8 @@ import us.zoom.sdk.StartMeetingParamsWithoutLogin;
 
 import us.zoom.sdk.JoinMeetingOptions;
 import us.zoom.sdk.JoinMeetingParams;
+import us.zoom.sdk.InviteOptions;
+import us.zoom.sdk.MeetingViewsOptions;
 
 import com.mokriya.zoomus.RNZoomUsBridgeHelper;
 
@@ -175,6 +177,10 @@ public class RNZoomUsBridgeModule extends ReactContextBaseJavaModule implements 
         final MeetingService meetingService = zoomSDK.getMeetingService();
 
         JoinMeetingOptions opts = new JoinMeetingOptions();
+        opts.no_driving_mode = true;
+        opts.no_invite = true;
+        opts.invite_options = InviteOptions.INVITE_DISABLE_ALL;
+        opts.meeting_views_options = MeetingViewsOptions.NO_TEXT_PASSWORD + MeetingViewsOptions.NO_TEXT_MEETING_ID;
         JoinMeetingParams params = new JoinMeetingParams();
         params.displayName = displayName;
         params.meetingNo = meetingNo;
