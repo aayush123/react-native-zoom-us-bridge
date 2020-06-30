@@ -179,16 +179,16 @@ public class RNZoomUsBridgeModule extends ReactContextBaseJavaModule implements 
         final MeetingService meetingService = zoomSDK.getMeetingService();
 
         JoinMeetingOptions opts = new JoinMeetingOptions();
-        if (joiningOptions.hasKey('no_driving_mode')) {
-          opts.no_driving_mode = joiningOptions.getBoolean('no_driving_mode');
+        if (joiningOptions.hasKey("no_driving_mode")) {
+          opts.no_driving_mode = joiningOptions.getBoolean("no_driving_mode");
         }
-        if (joiningOptions.hasKey('no_invite')) {
-          opts.no_invite = joiningOptions.getBoolean('no_invite');
+        if (joiningOptions.hasKey("no_invite")) {
+          opts.no_invite = joiningOptions.getBoolean("no_invite");
         }
-        if (joiningOptions.hasKey('no_text_password') && joiningOptions.getBoolean('no_text_password')) {
+        if (joiningOptions.hasKey("no_text_password") && joiningOptions.getBoolean("no_text_password")) {
           opts.meeting_views_options += MeetingViewsOptions.NO_TEXT_PASSWORD;
         }
-        if (joiningOptions.hasKey('no_text_meeting_id') && joiningOptions.getBoolean('no_text_meeting_id')) {
+        if (joiningOptions.hasKey("no_text_meeting_id") && joiningOptions.getBoolean("no_text_meeting_id")) {
           opts.meeting_views_options += MeetingViewsOptions.NO_TEXT_MEETING_ID;
         }
         JoinMeetingParams params = new JoinMeetingParams();
