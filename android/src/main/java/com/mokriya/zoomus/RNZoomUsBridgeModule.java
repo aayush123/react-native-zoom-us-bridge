@@ -227,20 +227,14 @@ public class RNZoomUsBridgeModule extends ReactContextBaseJavaModule implements 
     public void onMeetingStatusChanged(MeetingStatus meetingStatus, int errorCode, int internalErrorCode) {
         Log.i(TAG, "onMeetingStatusChanged, meetingStatus=" + meetingStatus + ", errorCode=" + errorCode + ", internalErrorCode=" + internalErrorCode);
         WritableMap params = Arguments.createMap();
-
-        if(meetingStatus == MeetingStatus.MEETING_STATUS_FAILED) {
-          if (meetingPromise != null) {
+        if (meetingPromise != null) {
+          if(meetingStatus == MeetingStatus.MEETING_STATUS_FAILED) {
             meetingPromise.reject(
                     "ERR_ZOOM_MEETING",
                     "Error: " + errorCode + ", internalErrorCode=" + internalErrorCode
             );
             meetingPromise = null;
-          }
-        } else if (meetingStatus == MeetingStatus.MEETING_STATUS_DISCONNECTING) {
-          sendEvent(reactContext, "meetingEnded", params);
-        } else if (meetingStatus == MeetingStatus.MEETING_STATUS_INMEETING) {
-          sendEvent(reactContext, "meetingStarted", params);
-          if (meetingPromise != null) {
+          } else if (meetingStatus == MeetingStatus.MEETING_STATUS_INMEETING) {
             meetingPromise.resolve("Connected to zoom meeting");
             meetingPromise = null;
           }
